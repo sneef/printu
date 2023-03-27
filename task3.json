@@ -1,0 +1,231 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Task 3",
+		"description": "Mark 4 (1-5)",
+		"version": "1.0.0"
+	},
+	"servers": [
+		{
+		"url": "http://localhost/v1",
+		"description": "url to main point"
+		}
+	],
+	"paths": {
+		"/upload": {
+			"post": {
+				"description": "POST-request to server for upload",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"part": {
+										"description": "number of part",
+										"type": "integer"
+									},
+									"etag": {
+										"description": "hash for etag",
+										"type": "string"
+									}
+								}
+							},
+							"examples": {
+								"part": {
+									"summary": "field part, one from json-array",
+									"value": "1"
+								},
+								"etag": {
+									"summary": "hash for etag",
+									"value": "a54357aff0632cce46d942af68356b38"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Successfull request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"$ref": "#/components/schemas/ImageFile"
+								}
+							}
+						}
+					},
+					"default": {
+						"description": "Unsuccessfull request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"$ref": "#/components/schemas/serverErrorCode"
+								}
+							}
+						}
+					}
+				}
+				
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"ImageFile": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer"
+					},
+					"timestamp": {
+						"type": "integer"
+					},
+					"source": {
+						"type": "string"
+					},
+					"folder": {
+						"type": "string"
+					},
+					"height": {
+						"type": "integer"
+					},
+					"width": {
+						"type": "integer"
+					},
+					"mime": {
+						"type": "string"
+					},
+					"display": {
+						"type": "object",
+						"properties": {
+							"thumbnail": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/propThumbnail"
+								}
+							},
+							"preview": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/propPreview"
+								}
+							},
+							"square": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/propSquare"
+								}
+							},
+							"original": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/propOriginal"
+								}
+							}
+						}
+					},
+					"metadata": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/propMetadata"
+						}
+					}
+				}
+			},
+			"propThumbnail": {
+				"type": "object",
+				"properties": {
+					"width": {
+						"type": "integer"
+					},
+					"height": {
+						"type": "integer"
+					},
+					"src": {
+						"type": "string"
+					}
+				}
+			},
+			"propPreview": {
+				"type": "object",
+				"properties": {
+					"width": {
+						"type": "integer"
+					},
+					"height": {
+						"type": "integer"
+					},
+					"src": {
+						"type": "string"
+					}
+				}
+			},
+			"propSquare": {
+				"type": "object",
+				"properties": {
+					"width": {
+						"type": "integer"
+					},
+					"height": {
+						"type": "integer"
+					},
+					"src": {
+						"type": "string"
+					}
+				}
+			},
+			"propOriginal": {
+				"type": "object",
+				"properties": {
+					"width": {
+						"type": "integer"
+					},
+					"height": {
+						"type": "integer"
+					},
+					"src": {
+						"type": "string"
+					}
+				}
+			},
+			"propMetadata": {
+				"type": "object",
+				"properties": {
+					"gps": {
+						"type": "string"
+					},
+					"datetime": {
+						"type": "integer"
+					},
+					"name": {
+						"type": "string"
+					}
+				}
+			},
+			"serverErrorCode": {
+				"type": "object",
+				"properties": {
+					"errorCode": {
+						"type": "integer"
+					},
+					"userMessage": {
+						"type": "string"
+					},
+					"devMessage": {
+						"type": "string"
+					},
+					"more": {
+						"type": "string"
+					},
+					"applicationCode": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}
